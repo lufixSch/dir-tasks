@@ -26,4 +26,5 @@ Currently the execution time is fixed to 00:01:00 for the daily script and Mon (
 
 I recommend to use docker compose. The docker compose file already present in the project can be used as a preset. By default only one directory is used but more directories can be added by updating the `command` property. 
 
-> [!NOTE] Always add the required directories as volumes
+> [!NOTE] 
+> Always add the required directories as volumes
