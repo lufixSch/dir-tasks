@@ -1,0 +1,5 @@
+.tasks/
+.venvs/
+__pycache__/
+
+.env

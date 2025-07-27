@@ -1,0 +1,8 @@
+services:
+  dirtasks:
+    container_name: dirtasks
+    build: .
+    volumes:
+      - ${TASKS_DIR}:/tasks_dir
+    command: python -u main.py /tasks_dir # Add more directories to command if needed
+
