@@ -122,6 +122,8 @@ def main(task_dirs: list[str] = [], log_level=logging.WARN):
     logging.basicConfig(level=log_level)
     logger = logging.getLogger()
 
+    logger.info(f"Current time is: {datetime.now()}")
+
     threads: list[threading.Thread] = []
     for dir in task_dirs:
         cwd = Path(dir)
