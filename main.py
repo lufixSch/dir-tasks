@@ -85,10 +85,10 @@ class ExecuteScriptWatchdogHanlder(FileSystemEventHandler):
             EVENT_TYPE_CLOSED_NO_WRITE,
             EVENT_TYPE_OPENED,
         ]:
-            self._logger.debug(f"Skipping event '{event.event_type}'")
+            self._logger.debug(f"Skipping event '{event.event_type}' ({event})")
             return
 
-        self._logger.debug(f"Caputred valid Event '{event.event_type}'")
+        self._logger.debug(f"Captured valid Event '{event.event_type}' ({event})")
 
         # Use timer to debounce multiple events
         if self._timer:
@@ -101,7 +101,7 @@ class ExecuteScriptWatchdogHanlder(FileSystemEventHandler):
 
     def _callback(self, event: FileSystemEvent):
         self._logger.info("Executing...")
-        subprocess.run(["python", str(self._script)], cwd=str(self._cwd))
+        subprocess.run(["python", "-u", str(self._script)], cwd=str(self._cwd))
 
 
 def get_name(p: Path):
@@ -124,7 +124,7 @@ def exec_periodic(cwd: Path, script: Path, period: Period):
         sleep(diff.total_seconds())
 
         logger.info("Executing...")
-        subprocess.run(["python", str(script)], cwd=str(cwd))
+        subprocess.run(["python", "-u", str(script)], cwd=str(cwd))
 
 
 def main(task_dirs: list[str] = [], log_level=logging.WARN):
@@ -136,7 +136,7 @@ def main(task_dirs: list[str] = [], log_level=logging.WARN):
     )  # Run weekly at Monday (or Sunday depending on locale) 00:01:00
 
     logging.basicConfig(
-        format="%(asctime)s %(levelname)-8s %(message)s",
+        format="%(asctime)s %(name)s - %(levelname)-5s: %(message)s",
         level=log_level,
         datefmt="%Y-%m-%d %H:%M:%S",
     )
