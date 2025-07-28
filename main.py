@@ -6,7 +6,13 @@ from dataclasses import dataclass
 import subprocess
 import logging
 from watchdog.observers import Observer
-from watchdog.events import FileSystemEvent, FileSystemEventHandler
+from watchdog.events import (
+    EVENT_TYPE_CLOSED,
+    EVENT_TYPE_CLOSED_NO_WRITE,
+    EVENT_TYPE_OPENED,
+    FileSystemEvent,
+    FileSystemEventHandler,
+)
 import argparse
 
 exit = False
@@ -74,6 +80,16 @@ class ExecuteScriptWatchdogHanlder(FileSystemEventHandler):
             self._logger.debug("Skipping changes in '.tasks'")
             return
 
+        if event.event_type in [
+            EVENT_TYPE_CLOSED,
+            EVENT_TYPE_CLOSED_NO_WRITE,
+            EVENT_TYPE_OPENED,
+        ]:
+            self._logger.debug(f"Skipping event '{event.event_type}'")
+            return
+
+        self._logger.debug(f"Caputred valid Event '{event.event_type}'")
+
         # Use timer to debounce multiple events
         if self._timer:
             self._timer.cancel()
@@ -119,7 +135,11 @@ def main(task_dirs: list[str] = [], log_level=logging.WARN):
         weekday=0, hour=0, minute=1, second=0
     )  # Run weekly at Monday (or Sunday depending on locale) 00:01:00
 
-    logging.basicConfig(format='%(asctime)s %(levelname)-8s %(message)s', level=log_level, datefmt='%Y-%m-%d %H:%M:%S')
+    logging.basicConfig(
+        format="%(asctime)s %(levelname)-8s %(message)s",
+        level=log_level,
+        datefmt="%Y-%m-%d %H:%M:%S",
+    )
     logger = logging.getLogger()
 
     logger.info(f"Current time is: {datetime.now()}")
