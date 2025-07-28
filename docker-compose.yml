@@ -2,6 +2,7 @@ services:
   dirtasks:
     container_name: dirtasks
     build: .
+    user: ${UID}:${GID}
     volumes:
       - ${TASKS_DIR}:/tasks_dir
     environment:

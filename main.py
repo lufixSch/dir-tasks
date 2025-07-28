@@ -119,7 +119,7 @@ def main(task_dirs: list[str] = [], log_level=logging.WARN):
         weekday=0, hour=0, minute=1, second=0
     )  # Run weekly at Monday (or Sunday depending on locale) 00:01:00
 
-    logging.basicConfig(level=log_level)
+    logging.basicConfig(format='%(asctime)s %(levelname)-8s %(message)s', level=log_level, datefmt='%Y-%m-%d %H:%M:%S')
     logger = logging.getLogger()
 
     logger.info(f"Current time is: {datetime.now()}")
