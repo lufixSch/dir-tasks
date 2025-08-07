@@ -1,0 +1,10 @@
+[project]
+name = "dirtasks"
+version = "1.0.0"
+description = "Small tool to run recurring tasks defined in a directory on a background service."
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = [
+    "requests>=2.32.4",
+    "watchdog>=6.0.0",
+]

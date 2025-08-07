@@ -7,5 +7,5 @@ services:
       - ${TASKS_DIR}:/tasks_dir
     environment:
       - TZ=${TIMEZONE}
-    command: python -u main.py /tasks_dir # Add more directories to command if needed
+    # command: /app/.venv/bin/python -u main.py /tasks_dir # Add more directories to command if needed
 
