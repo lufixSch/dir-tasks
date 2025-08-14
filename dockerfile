@@ -17,8 +17,9 @@ FROM python:3.12-slim
 WORKDIR /app
 
 COPY --from=builder /app/.venv /app/.venv
+ENV PATH=/app/.venv/bin:$PATH
 
 # Copy the project into the image
 COPY main.py /app/main.py
 
-CMD ["/app/.venv/bin/python", "-u", "main.py", "/tasks_dir"]
+CMD ["python", "-u", "main.py", "/tasks_dir"]
